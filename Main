@@ -1,4 +1,4 @@
-local whitelist = {"Soccer_Gaming202l", "Player2", "Player3"}
+local whitelist = {"Soccer_Gaming202l1", "Player2", "Player3"}
 
 
 local function isPlayerWhitelisted(player)
