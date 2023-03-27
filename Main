@@ -1,3 +1,13 @@
+local whitelist = {"Soccer_Gaming202l", "Player2", "Player3"}
+
+
+local function isPlayerWhitelisted(player)
+    return table.find(whitelist, player.Name) ~= nil
+end
+
+local function onPlayerAdded(player)
+    if isPlayerWhitelisted(player) then
+        print(player.Name .. " is whitelisted!")
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/insanedude59/UILib/main/source"))();
 lib:SetTitle("Bishop Hub || Left CTRL to close")
 local tab1 = lib:NewTab("Main", "All The Functions")
@@ -215,3 +225,15 @@ end)
 tab4:NewButton("Copy Discord Invite Link", function()
 setclipboard("https://discord.com/invite/ZPAF5B6X")
 end)
+    else
+        print(player.Name .. " is not allowed to use this script.")
+    end
+end
+
+-- Check all current players
+for _, player in ipairs(game.Players:GetPlayers()) do
+    onPlayerAdded(player)
+end
+
+-- Connect the function to the PlayerAdded event for new players
+game.Players.PlayerAdded:Connect(onPlayerAdded)
