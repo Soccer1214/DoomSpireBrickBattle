@@ -1,0 +1,217 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/insanedude59/UILib/main/source"))();
+lib:SetTitle("Bishop Hub || Left CTRL to close")
+local tab1 = lib:NewTab("Main", "All The Functions")
+-- Create a tab named "Settings"
+
+-- Create a new slider in the "Settings" tab for WalkSpeed
+tab1:NewSlider("WalkSpeed", 10, 200, 16, function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end)
+
+-- Create a new slider in the "Settings" tab for JumpPower
+tab1:NewSlider("JumpPower", 10, 200, 50, function(value)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+end)
+
+tab1:NewToggle("Kill All", false, function(value)
+    getgenv().BatusMadeThisShit = value
+    if value then
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/juywvm/-Roblox-Projects-/main/Doomspire%20Brickbattle/autofarm_kills.lua'), true))()
+    end
+end)
+
+local plr = game.Players.LocalPlayer
+
+local scaffold = Instance.new("Part")
+scaffold.Anchored = true
+scaffold.Size = Vector3.new(4,0.2,4)
+scaffold.Material = Enum.Material.Neon
+scaffold.BrickColor = BrickColor.new("Bright red")
+scaffold.Transparency = .50
+scaffold.CanCollide = true
+
+local isScaffoldOn = false
+
+local function createScaffold()
+    local scaffoldInstance = scaffold:Clone()
+    scaffoldInstance.Position = plr.Character.HumanoidRootPart.Position - Vector3.new(0,3,0)
+    scaffoldInstance.Parent = workspace
+end
+
+tab1:NewToggle("Scaffold",false,function(value)
+    isScaffoldOn = value
+    if isScaffoldOn then
+        while isScaffoldOn do
+            createScaffold()
+            wait(.1)
+        end
+    end
+end)
+_G.infiniteJumpEnabled = false
+
+local function onJumpRequest()
+    if _G.infJumpEnabled then
+        game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+    end
+end
+
+game:GetService("UserInputService").JumpRequest:Connect(onJumpRequest)
+
+tab1:NewToggle("Inf Jump",false,function(value)
+    _G.infJumpEnabled = value
+end)
+
+local Noclip = false
+local Clip = false
+
+function noclip()
+    Clip = false
+    local function Nocl()
+        if Clip == false and game.Players.LocalPlayer.Character ~= nil then
+            for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
+                    v.CanCollide = false
+                end
+            end
+        end
+        wait(0.21) -- basic optimization
+    end
+    Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
+end
+
+function clip()
+    if Noclip then Noclip:Disconnect() end
+    Clip = true
+end
+
+tab1:NewToggle("Noclip", false, function(value)
+    if value then
+        noclip()
+    else
+        clip()
+    end
+end)
+
+tab1:NewToggle("Auto Heal", false, function(value)
+    while true do
+        wait(.05)
+        if value then
+            local player = game:GetService("Players").LocalPlayer
+            player.Character.Humanoid.Health = player.Character.Humanoid.MaxHealth
+        end
+    end
+end)
+local floorPart = Instance.new("Part")
+floorPart.Size = Vector3.new(1000, 5, 1000) -- adjust size as needed
+floorPart.Anchored = true
+floorPart.CFrame = CFrame.new(0, -20.80000019, 0)
+floorPart.Transparency = 1 -- make the part transparent
+floorPart.CanCollide = true -- make the part collidable
+floorPart.Material = Enum.Material.Neon -- set the material to neon
+floorPart.Color = Color3.fromRGB(0, 255, 208) -- set the part color to cyan
+
+local autofarmToggle = tab1:NewToggle("Anti Void", false, function(value)
+    floorPart.Parent = value and game.Workspace or nil -- add or remove the floor part from the workspace based on the toggle value
+end)
+local floorPart = Instance.new("Part")
+floorPart.Size = Vector3.new(1000, 1, 1000) -- adjust size as needed
+floorPart.Anchored = true
+floorPart.CFrame = CFrame.new(0, -20.80000019, 0)
+floorPart.Transparency = .73 -- make the part transparent
+floorPart.CanCollide = false -- make the part collidable
+floorPart.Material = Enum.Material.Neon -- set the material to neon
+floorPart.Color = Color3.fromRGB(0, 255, 208) -- set the part color to cyan
+
+local autofarmToggle = tab1:NewToggle("Anti Void Visability", false, function(value)
+    floorPart.Parent = value and game.Workspace or nil -- add or remove the floor part from the workspace based on the toggle value
+end)
+tab1:NewButton("Invisibity (OP)", function()
+    loadstring(game:HttpGet('https://pastebin.com/raw/2ucYrZ9H'))()
+end)
+tab1:NewButton("Reset",function()
+    local player = game.Players.LocalPlayer -- get the local player
+    local character = player.Character or player.CharacterAdded:Wait() -- get the character or wait for it to spawn
+
+    local humanoid = character:WaitForChild("Humanoid") -- get the humanoid
+
+    humanoid.Health = 0 -- set the player's character health to 0 to make them die instantly
+end)
+
+local tab2 = lib:NewTab("Teleports", "Turn On Anti Void, If The Spawn Are Gone You Will Fall And Die!")
+
+tab2:NewDropdown("                                                     🟢  Green Tab  🟢",{},function(selected) -- name <string> list <table> default <string> callback <function>
+	print(selected)
+end)
+
+tab2:NewButton("Green | Top",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-21.0001221, 128.799973, -153.000122)
+end)
+tab2:NewButton("Green | Middle",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.0014128685, 64.0000458, -130.99852)
+end)
+tab2:NewButton("Green | Bottom",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.00305938721, 23.2000465, -131.000275)
+end)
+tab2:NewDropdown("                                                      🔴  Red Tab  🔴",{},function(selected) -- name <string> list <table> default <string> callback <function>
+	print(selected)
+end)
+tab2:NewButton("Red | Top",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-153.000183, 128.799973, 21)
+end)
+tab2:NewButton("Red | Middle",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-131.003113, 64.0000229, -0.000127792358)
+end)
+tab2:NewButton("Red | Bottom",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-131.003113, 23.2000237, -0.000341415405)
+end)
+tab2:NewDropdown("                                                       🔵  Blue Tab  🔵",{},function(selected) -- name <string> list <table> default <string> callback <function>
+	print(selected)
+end)
+tab2:NewButton("Blue | Top",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(20.999939, 128.799873, 109.000061)
+end)
+tab2:NewButton("Blue | Middle",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.00300979614, 64.0000458, 130.999664)
+end)
+tab2:NewButton("Blue | Bottom",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.00147029, 23.2, 131)
+end)
+tab2:NewDropdown("                                                        🟡  Yellow  🟡",{},function(selected) -- name <string> list <table> default <string> callback <function>
+	print(selected)
+end)
+tab2:NewButton("Yellow | Top",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(109, 128.799873, -21.000061)
+end)
+tab2:NewButton("Yellow | Middle",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(130.997086, 64.0000076, -0.000212669373)
+end)
+tab2:NewButton("Yellow | Bottom",function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(130.997086, 23.2000084, -0.000212669373)
+end)
+tab2:NewDropdown("                                                        🎲  Others  🎲",{},function(selected) -- name <string> list <table> default <string> callback <function>
+	print(selected)
+end)
+tab2:NewButton("Spectate Box",function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 717, 0)
+end)
+tab2:NewButton("Center",function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 133, 0)
+end)
+local tab3 = lib:NewTab("Misc", "Other Stuff")
+tab3:NewButton("Inf Yield", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+end)
+
+local tab4 = lib:NewTab("Credits", "")
+tab4:NewDropdown("                                              Credits: Bishop#2082",{},function(selected) -- name <string> list <table> default <string> callback <function>
+	print(selected)
+end)
+tab4:NewDropdown("                      Join The Discord: https://discord.gg/ZPAF5B6X",{},function(selected) -- name <string> list <table> default <string> callback <function>
+	print(selected)
+end)
+tab4:NewButton("Copy Discord User", function()
+setclipboard("Bishop#2084")
+end)
+tab4:NewButton("Copy Discord Invite Link", function()
+setclipboard("https://discord.com/invite/ZPAF5B6X")
+end)
